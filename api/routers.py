@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse
 from database import SessionClass
 from crud.session import *
@@ -12,12 +12,15 @@ def get_db():
   try:
     session = SessionClass()
     yield session
+  except:
+    session.rollback()
+    raise
   finally:
     session.close()
 
 
 @router.get('/')
-async def root(db: SessionClass = Depends(get_db)):
+async def root(request: Request, db: SessionClass = Depends(get_db)):
   return JSONResponse({"message": "OK"})
 
 @router.post('/session', response_model=schema.CreateJankenSessionResponse)

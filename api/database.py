@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from models import *
 
 
-DATABASE_URL = 'sqlite:///default.sqlite3'
+DATABASE_URL = 'sqlite:///default.sqlite3?check_same_thread=false'
 
 ECHO_LOG = False
 

@@ -30,3 +30,7 @@ class JoinJankenSessionRequest(BaseModel):
 
 class JoinJankenSessionResponse(CreateJankenSessionResponse):
     pass
+
+class HandleNewHandData(BaseModel):
+    user_id: str
+    hand: int

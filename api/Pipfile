@@ -12,6 +12,9 @@ pydantic = "*"
 pytest = "*"
 requests = "*"
 sqlalchemy-utils = "*"
+gunicorn = "*"
+python-socketio = "*"
+typing = "*"
 
 [dev-packages]
 
