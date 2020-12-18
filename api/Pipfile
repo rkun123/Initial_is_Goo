@@ -11,6 +11,7 @@ pylint = "*"
 pydantic = "*"
 pytest = "*"
 requests = "*"
+sqlalchemy-utils = "*"
 
 [dev-packages]
 

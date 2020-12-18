@@ -1,8 +1,5 @@
 from pydantic import BaseModel
-
-class CreateJankenSessionReq(BaseModel):
-    user_name: str
-    session_name: str
+from typing import Optional
 
 class JankenSession(BaseModel):
     id: str
@@ -16,11 +13,20 @@ class User(BaseModel):
     id: str
     name: str
     is_host: bool
-    janken_session: JankenSession
 
     class Config:
         orm_mode = True
 
+class CreateJankenSessionRequest(BaseModel):
+    user_name: str
+    session_name: str
+
 class CreateJankenSessionResponse(BaseModel):
-    janken_session: JankenSession
-    user: User
+    janken_session: Optional[JankenSession]
+    user: Optional[User]
+
+class JoinJankenSessionRequest(BaseModel):
+    user_name: str
+
+class JoinJankenSessionResponse(CreateJankenSessionResponse):
+    pass

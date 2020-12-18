@@ -1,6 +1,7 @@
 from models import JankenSession, User
 from database import SessionClass
 from contextlib import contextmanager
+import schema
 
 @contextmanager
 def session_manager(session):
@@ -37,6 +38,16 @@ def create_session(db: SessionClass, user_name, session_name):
         session.add(janken_session)
         user.janken_session = janken_session
         return {
-            janken_session: janken_session,
-            user: user
-            }
+            'user': user,
+            'janken_session': janken_session
+        }
+
+def join_session(db: SessionClass, user_name, session_id):
+    with session_manager(db) as session:
+        user = User(name=user_name)
+        janken_session = session.query(JankenSession).filter(JankenSession.id == session_id).first()
+        user.janken_session = janken_session
+        return {
+            'user': user,
+            'janken_session': janken_session
+        }
