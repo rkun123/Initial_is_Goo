@@ -23,7 +23,7 @@ app.add_middleware(
 )
 
 @app.middleware('http')
-async def inject_user_session_id_into_request(request: Request, call_next):
+async def inject_user_id_into_request(request: Request, call_next):
     try:
         auth_header = request.headers['Authorization']
         if auth_header is not None:

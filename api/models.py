@@ -8,12 +8,12 @@ def generate_uuid():
 
 Base = declarative_base()
 
-class JankenSession(Base):
-    __tablename__ = 'janken_session'
+class Room(Base):
+    __tablename__ = 'room'
     id = Column(String, primary_key=True, default=generate_uuid)
     name = Column(String(length=255), default="Unknown")
     latest_stage = Column(Integer, default=0)
-    users = relationship('User', backref='janken_session')
+    users = relationship('User', backref='room')
 
 
 class User(Base):
@@ -21,13 +21,13 @@ class User(Base):
     id = Column(String(length=255), primary_key=True, default=generate_uuid)
     name = Column(String(length=255), default="Unknown")
     is_host = Column(Boolean, default=False)
-    janken_session_id = Column(Integer, ForeignKey('janken_session.id'))
+    room_id = Column(Integer, ForeignKey('room.id'))
 
 
 class Result(Base):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
-    session_id = Column(Integer, ForeignKey('janken_session.id'))
+    room_id = Column(Integer, ForeignKey('room.id'))
     user_id = Column(Integer, ForeignKey('user.id'))
     is_win = Column(Boolean, default=False)
     stage = Column(Integer, default=0)

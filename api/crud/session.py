@@ -1,4 +1,4 @@
-from models import JankenSession, User
+from models import Room, User
 from database import SessionClass
 from contextlib import contextmanager
 import schema
@@ -18,9 +18,9 @@ def user_to_host(db: SessionClass, user: User):
         user = session.query(User).filter(User.id == user.id)
         user.is_host = True
 
-# set User's session
-def set_user_to_session(user: User, janken_session: JankenSession):
-        user.janken_session = janken_session
+# set User's room
+def set_user_to_room(user: User, room: Room):
+        user.room = room
         
 # create User (just like a session)
 def create_user(db: SessionClass, name):
@@ -29,25 +29,25 @@ def create_user(db: SessionClass, name):
         session.new(user)
         return user
 
-# create JankenSession
-def create_session(db: SessionClass, user_name, session_name):
+# create Room
+def create_room(db: SessionClass, user_name, room_name):
     with session_manager(db) as session:
         user = User(name=user_name)
-        janken_session = JankenSession(name=session_name)
+        room = Room(name=room_name)
         session.add(user)
-        session.add(janken_session)
-        user.janken_session = janken_session
+        session.add(room)
+        user.room = room
         return {
             'user': user,
-            'janken_session': janken_session
+            'room': room
         }
 
-def join_session(db: SessionClass, user_name, session_id):
+def join_room(db: SessionClass, user_name, room_id):
     with session_manager(db) as session:
         user = User(name=user_name)
-        janken_session = session.query(JankenSession).filter(JankenSession.id == session_id).first()
-        user.janken_session = janken_session
+        room = session.query(Room).filter(Room.id == room_id).first()
+        user.room = room
         return {
             'user': user,
-            'janken_session': janken_session
+            'room': room
         }

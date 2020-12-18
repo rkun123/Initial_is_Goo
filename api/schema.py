@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class JankenSession(BaseModel):
+class Room(BaseModel):
     id: str
     name: str
     latest_stage: str
@@ -17,18 +17,18 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
-class CreateJankenSessionRequest(BaseModel):
+class CreateRoomRequest(BaseModel):
     user_name: str
-    session_name: str
+    room_name: str
 
-class CreateJankenSessionResponse(BaseModel):
-    janken_session: Optional[JankenSession]
+class CreateRoomResponse(BaseModel):
+    room: Optional[Room]
     user: Optional[User]
 
-class JoinJankenSessionRequest(BaseModel):
+class JoinRoomRequest(BaseModel):
     user_name: str
 
-class JoinJankenSessionResponse(CreateJankenSessionResponse):
+class JoinRoomResponse(CreateRoomResponse):
     pass
 
 class HandleNewHandData(BaseModel):

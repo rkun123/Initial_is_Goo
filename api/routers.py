@@ -23,14 +23,14 @@ def get_db():
 async def root(request: Request, db: SessionClass = Depends(get_db)):
   return JSONResponse({"message": "OK"})
 
-@router.post('/session', response_model=schema.CreateJankenSessionResponse)
-async def create_session_handler(req: schema.CreateJankenSessionRequest, db: SessionClass = Depends(get_db)):
-  res = create_session(db, req.user_name, req.session_name)
-  response = schema.CreateJankenSessionResponse(user=res['user'], janken_session=res['janken_session'])
+@router.post('/room', response_model=schema.CreateRoomResponse)
+async def create_room_handler(req: schema.CreateRoomRequest, db: SessionClass = Depends(get_db)):
+  res = create_room(db, req.user_name, req.room_name)
+  response = schema.CreateRoomResponse(user=res['user'], room=res['room'])
   return response
 
-@router.post('/session/{session_id}', response_model=schema.JoinJankenSessionResponse)
-async def join_session_handler(req: schema.JoinJankenSessionRequest, session_id: str, db: SessionClass = Depends(get_db)):
-  res = join_session(db, req.user_name, session_id)
-  response = schema.JoinJankenSessionResponse(user=res['user'], janken_session=res['janken_session'])
+@router.post('/room/{room_id}', response_model=schema.JoinRoomResponse)
+async def join_room_handler(req: schema.JoinRoomRequest, room_id: str, db: SessionClass = Depends(get_db)):
+  res = join_room(db, req.user_name, room_id)
+  response = schema.JoinRoomResponse(user=res['user'], room=res['room'])
   return response
