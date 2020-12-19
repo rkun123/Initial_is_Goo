@@ -13,14 +13,15 @@ class Room(Base):
     id = Column(String, primary_key=True, default=generate_uuid)
     name = Column(String(length=255), default="Unknown")
     latest_stage = Column(Integer, default=0)
-    users = relationship('User', backref='room')
+    host_user_id = Column(String(length=255), ForeignKey('user.id'))
+    users = relationship('User', foreign_keys='User.room_id')
+    host_user = relationship('User', foreign_keys=host_user_id)
 
 
 class User(Base):
     __tablename__ = 'user'
     id = Column(String(length=255), primary_key=True, default=generate_uuid)
     name = Column(String(length=255), default="Unknown")
-    is_host = Column(Boolean, default=False)
     room_id = Column(String(length=255), ForeignKey('room.id'))
 
 
