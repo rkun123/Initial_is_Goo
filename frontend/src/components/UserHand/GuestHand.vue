@@ -1,7 +1,7 @@
 <template>
   <div class="guest">
-    <img class="win" :src="handname" v-if="!is_win">
-    <img class="lose" :src="handname" v-if="is_win">
+    <img class="win" :src="handname" v-if="is_win">
+    <img class="lose" :src="handname" v-if="!is_win">
     <p>{{username}}</p>
   </div>
 </template>

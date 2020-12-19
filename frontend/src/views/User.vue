@@ -47,6 +47,9 @@ export default {
           return res.json()
         }).then((res) => {
           console.log(res)
+          this.$store.state.username = this.name
+          this.$store.state.hostname = res.room.host_user.name
+          this.$store.state.roomname = res.room.name
           this.$router.push("/room/"+res.room.host_user.room_id+"/guest")
         }).catch((e) => {
           alert("Fetch failed" + e)

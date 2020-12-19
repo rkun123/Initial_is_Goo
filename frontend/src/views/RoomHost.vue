@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       hand:"0",
-      username: "shuuuu",
+      username: "",
       on: false,
       roomname: "shuuuuの部屋",
       is_win: true
@@ -43,6 +43,10 @@ export default {
       console.log(this.$refs.jkp.is_start)
 
     }
+  },
+  mounted: function(){
+    this.username = this.$store.state.username
+    this.roomname = this.$store.state.roomname
   }
 }
 </script>

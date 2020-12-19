@@ -4,16 +4,16 @@
     <div class="vs">
       <div class="hands">
         <h2>You</h2>
-        <guest-hand :hand="hand" :username="username" :is_win="on" class="youHand"/>
+        <guest-hand :hand="hand" :username="username" :is_win="is_win" class="youHand"/>
       </div>
       <h1>vs</h1>
       <div class="hands">
         <h2>Host</h2>
-        <guest-hand :hand="hand" :username="username" :is_win="is_win" class="youHand"/>
+        <guest-hand :hand="hand" :username="hostname" :is_win="host_win" class="youHand"/>
       </div>
     </div>
     <eveyone-hand :_data="hands"/>
-    <hand-status class="cam" v-if="on"/>
+    <hand-status class="cam" />
   </div>
 </template>
 
@@ -28,8 +28,10 @@ export default {
       hand:"0",
       username: "shuuuu",
       on: false,
-      roomname: "shuuuuの部屋",
-      is_win: true
+      roomname: "",
+      is_win: true,
+      hostname:"",
+      host_win: true
     }
   },
   components: { 
@@ -37,6 +39,11 @@ export default {
     GuestHand,
     EveyoneHand 
   },
+  mounted: function(){
+    this.username = this.$store.state.username
+    this.hostname = this.$store.state.hostname
+    this.roomname = this.$store.state.roomname
+  }
 }
 </script>
 
