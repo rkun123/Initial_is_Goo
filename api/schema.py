@@ -31,6 +31,7 @@ class JoinRoomRequest(BaseModel):
 class JoinRoomResponse(CreateRoomResponse):
     pass
 
-class HandleNewHandData(BaseModel):
+class NewHandData(BaseModel):
     user_id: str
+    room_id: str
     hand: int

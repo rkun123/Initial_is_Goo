@@ -1,13 +1,15 @@
 import schema
-from main import socket_manager as socket
+from socketio import AsyncNamespace
 
-@socket.on('connect', namespace='/janken')
-async def handle_connect(sid, data: schema.HandleNewHandData):
-    print('Connected Socket.io')
-    await socket.emit('Hello')
+print("test")
+class SocketHandlers(AsyncNamespace):
+    def on_connect(self, sid, environ):
+        print('Connected by sid: ', sid)
+        pass
 
-# new hand state
-@socket.on('new_hand')
-async def handle_new_hand(sid, data: schema.HandleNewHandData):
-    print('Handle new hand. user:', data.user_id, 'hand:', data.hand)
-    await socket.emit('new_hand', data) 
+    def on_disconnect(self, sid):
+        pass
+
+    def on_new_hand(self, sid, data):
+        new_hand = schema.NewHandData.parse_obj(data)
+        self.emit('new_hand', new_hand.dict(), room=new_hand.room_id)

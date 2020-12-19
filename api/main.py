@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import schema
 from fastapi_socketio import SocketManager
+from socket_handlers import SocketHandlers
 
 from routers import router
 
@@ -35,5 +36,13 @@ async def inject_user_id_into_request(request: Request, call_next):
         pass
     response = await call_next(request)
     return response
+
+@app.middleware('http')
+async def inject_sio(request: Request, call_next):
+    request.state.sio = socket_manager._sio
+    response = await call_next(request)
+    return response
+
+socket_manager._sio.register_namespace(SocketHandlers('/event'))
 
 app.include_router(router)
