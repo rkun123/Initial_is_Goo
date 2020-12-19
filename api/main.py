@@ -43,6 +43,6 @@ async def inject_sio(request: Request, call_next):
     response = await call_next(request)
     return response
 
-socket_manager._sio.register_namespace(SocketHandlers('/event'))
+socket_manager._sio.register_namespace(SocketHandlers('/'))
 
 app.include_router(router)

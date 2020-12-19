@@ -11,5 +11,6 @@ class SocketHandlers(AsyncNamespace):
         pass
 
     def on_new_hand(self, sid, data):
+        print('New hand')
         new_hand = schema.NewHandData.parse_obj(data)
-        self.emit('new_hand', new_hand.dict(), room=new_hand.room_id)
+        await self.emit('new_hand', new_hand.dict(), room=new_hand.room_id)
