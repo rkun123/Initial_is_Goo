@@ -1,0 +1,43 @@
+@startuml じゃんけんのシーケンス図について
+title じゃんけんのシーケンス図について
+participant じゃんけんマスター
+participant 参加者
+participant 参加者全員
+participant Server
+
+じゃんけんマスター -> Server: JankenSessionの作成要求をuser_nameと合わせて送信
+note left: じゃんけんマスターが\nじゃんけんセッションを作成する
+activate Server
+じゃんけんマスター <- Server: janken_session, userを返却
+deactivate Server
+activate じゃんけんマスター
+参加者 -> Server: session_idを送信
+note right of 参加者: 参加者がセッションに参加する
+activate Server
+参加者 <- Server: janken_session, userを返却
+参加者全員 <[#blue]- Server: 新しい参加者のuserを送信
+deactivate Server
+activate 参加者
+
+== スタンバイ時 ==
+alt 非同期で行われる
+    参加者 -[#blue]> Server: handが変わったら送信
+    じゃんけんマスター -[#blue]> Server: handが変わったら送信
+    参加者全員 <[#blue]- Server: 他のhandが変わったら受信
+end
+
+じゃんけんマスター -> Server: 本番開始要求
+
+alt 本番
+    参加者 <[#blue]- Server: 「最初はグー」イベントを送信
+    じゃんけんマスター <[#blue]- Server: 「最初はグー」イベントを送信
+    参加者 <[#blue]- Server: 「じゃんけんぽん」イベントを送信
+    じゃんけんマスター <[#blue]- Server: 「じゃんけんぽん」イベントを送信
+    参加者 -> Server: 結果を送信
+    じゃんけんマスター -> Server: 結果を送信
+
+
+    参加者全員 <[#blue]- Server: 結果を全員分送信
+
+end
+@enduml
