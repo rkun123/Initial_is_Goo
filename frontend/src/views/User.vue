@@ -51,9 +51,10 @@ export default {
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   border-bottom-left-radius: 50px;
-  width: 15%;
+  width: 30%;
   height: 40px;
-  max-width: 200px;
+  max-width: 300px;
+  min-width: 100px;
 }
 .design{
   backdrop-filter: blur(3px);
@@ -61,9 +62,12 @@ export default {
   border-radius: 5px;
   color: #333;
   line-height: 1.5;
-  max-width: 50%;
+  
   padding: 1rem 2rem;
   margin: auto;
+  width:100%;
+  max-width: 700px;
+  min-width: 300px;
 }
 .container {
   align-items: center;

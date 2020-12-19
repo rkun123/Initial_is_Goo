@@ -38,6 +38,7 @@ export default {
   width: 40%;
   height: 60px;
   max-width: 400px;
+  min-width: 200px;
 }
 .design{
   backdrop-filter: blur(3px);
@@ -46,6 +47,7 @@ export default {
   color: #333;
   line-height: 1.5;
   max-width: 50%;
+  min-width: 400px;
   padding: 1rem 2rem;
   margin: auto;
 }
