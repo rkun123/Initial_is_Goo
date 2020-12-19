@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 class User(BaseModel):
     id: str
@@ -17,6 +17,13 @@ class Room(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Result(BaseModel):
+    room_id: str
+    user_id: str
+    is_win: bool
+    stage: int
+    hand: int
 
 class CreateRoomRequest(BaseModel):
     user_name: str
@@ -42,3 +49,11 @@ class NewHandData(BaseModel):
 
 class PostResult(NewHandData):
     pass
+
+class NewUserResponse(BaseModel):
+    id: str
+    name: str
+    room_id: str
+
+class GameResultData(BaseModel):
+    data: List[Result]
