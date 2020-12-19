@@ -21,14 +21,14 @@ class User(Base):
     id = Column(String(length=255), primary_key=True, default=generate_uuid)
     name = Column(String(length=255), default="Unknown")
     is_host = Column(Boolean, default=False)
-    room_id = Column(Integer, ForeignKey('room.id'))
+    room_id = Column(String(length=255), ForeignKey('room.id'))
 
 
 class Result(Base):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
-    room_id = Column(Integer, ForeignKey('room.id'))
-    user_id = Column(Integer, ForeignKey('user.id'))
+    room_id = Column(String(length=256), ForeignKey('room.id'))
+    user_id = Column(String(length=256), ForeignKey('user.id'))
     is_win = Column(Boolean, default=False)
     stage = Column(Integer, default=0)
     hand = Column(Integer)
