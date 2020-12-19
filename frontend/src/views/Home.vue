@@ -1,10 +1,16 @@
 <template>
   <div class="home">
     <div class="back"></div>
-    <h1>じゃんけん</h1>
-    <fm placeholder="room ID"></fm>
-    <div class="room-making">
-      <link-button path="/host" class="button-margin">ルーム作成</link-button>
+    <div class="container">
+      <div class="design">
+        <h1>Rock-Paper-Scissors</h1>
+        <div class="room-making">
+          <link-button path="/room/join" class="button-margin">Join Room</link-button>
+        </div>
+        <div class="room-making">
+          <link-button path="/room/creat" class="button-margin">Creat Room</link-button>
+        </div>
+      </div>
     </div>
   </div>
   
@@ -12,21 +18,16 @@
 
 <script>
 import LinkButton from '@/components/Link.vue'
-import Form_text from '@/components/Form_text.vue'
 
 export default {
   name: 'Home',
   components: {
     LinkButton,
-    "fm": Form_text
   },
 }
 </script>
 
 <style scoped>
-.back {
-  background-size: cover;
-}
 .button-margin {
   font-size: 20px;
   margin-top: 50px;
@@ -38,4 +39,22 @@ export default {
   height: 60px;
   max-width: 400px;
 }
+.design{
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.445);
+  border-radius: 5px;
+  color: #333;
+  line-height: 1.5;
+  max-width: 50%;
+  padding: 1rem 2rem;
+  margin: auto;
+}
+.container {
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+
 </style>
