@@ -1,0 +1,1 @@
+pip install pipenv && pipenv --python $(which python) install && cd api && pipenv --python $(which python) run gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app
