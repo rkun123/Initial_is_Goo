@@ -48,6 +48,8 @@ def create_room(db: SessionClass, user_name, room_name):
 
 def join_room(db: SessionClass, user_name, room_id):
     with session_manager(db) as session:
+        if session.query(Room).filter(Room.id == room_id).count() == 0:
+            raise HTTPException(status_code=404)
         room = session.query(Room).filter(Room.id == room_id).first()
         user = User(name=user_name, room_id=room.id)
         session.add(user)
@@ -58,10 +60,9 @@ def join_room(db: SessionClass, user_name, room_id):
 
 def start_game(db: SessionClass, room_id, user_id):
     with session_manager(db) as session:
-        if session.query(Room).filter(Room.id == room_id).count() != 0:
-            room = session.query(Room).filter(Room.id == room_id).first()
-        else:
+        if session.query(Room).filter(Room.id == room_id).count() == 0:
             raise HTTPException(status_code=404)
+        room = session.query(Room).filter(Room.id == room_id).first()
         host_users = session.query(User).filter(User.id == user_id, User.room_id == room.id)
         if host_users.count() == 0:
             raise HTTPException(status_code=404)
