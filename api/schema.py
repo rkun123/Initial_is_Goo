@@ -31,6 +31,9 @@ class JoinRoomRequest(BaseModel):
 class JoinRoomResponse(CreateRoomResponse):
     pass
 
+class StartGameRequest(BaseModel):
+    user_id: str
+
 class NewHandData(BaseModel):
     user_id: str
     room_id: str
