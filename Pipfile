@@ -17,6 +17,7 @@ python-socketio = "*"
 typing = "*"
 uvloop = "*"
 httptools = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pylint = "*"
