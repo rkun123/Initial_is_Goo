@@ -34,12 +34,13 @@ async def create_room_handler(req: schema.CreateRoomRequest, db: SessionClass = 
 async def join_room_handler(req: schema.JoinRoomRequest, room_id: str, db: SessionClass = Depends(get_db)):
   res = join_room(db, req.user_name, room_id)
   response = schema.JoinRoomResponse(user=res['user'], room=res['room'])
+  print(response.room.host_user)
   return response
 
 @router.post('/room/{room_id}/start_game')
 async def start_game_handler(req: schema.StartGameRequest, room_id: str, db: SessionClass = Depends(get_db)):
   return start_game(db, room_id, req.user_id)
 
-# @router.post('/room/{room_id}/result')
-# async def post_result_handler(req: schema.PostResult, room_id: str, db: SessionClass = Depends(get_db)):
-#   return post_result(db, room_id, req.user_id, req.result)
+@router.post('/room/{room_id}/result')
+async def post_result_handler(req: schema.PostResult, room_id: str, db: SessionClass = Depends(get_db)):
+  return post_result(db, room_id, req.user_id, req.hand)

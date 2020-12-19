@@ -52,6 +52,7 @@ def test_create_room():
   assert response.status_code == 200
   assert response_body['user']['name'] == 'test_user'
   assert response_body['room']['name'] == 'test_room'
+  assert response_body['user']['room_id'] == response_body['room']['id']
 
 # セッション参加
 # 参加者のセッション参加時を想定したテスト
@@ -60,6 +61,7 @@ def test_create_room():
 # レスポンスは，新たに作成される自分自身を示すUser
 def test_join_room():
   room_id = create_room()['id']
+  
   print('room_id', room_id)
   response = c.post('/room/{}'.format(room_id), json={
     'user_name': 'test_user2',
@@ -70,9 +72,20 @@ def test_join_room():
   assert response.status_code == 200
   assert response_body['user']['name'] == 'test_user2'
   assert response_body['room']['name'] == 'test_room2'
+  assert response_body['user']['room_id'] == response_body['room']['id']
 
 # セッションに本番開始要求を送る
 # この操作には，該当セッションのホストとしての認証が必要である
 # 認証は，リクエスト時にAuthorizationヘッダーへBearer {room_id}という形式で設定する．
 # サーバー側では，request.state.user_idにuser_idが格納されるようmiddlewareを定義，設定している．
 
+def test_start_game():
+  room = create_room()
+  response = c.post('/room/{}/start_game'.format(room['id']), json={
+    'user_id': room['host_user']['id'],
+  })
+  print(response.json())
+  response_body = response.json()
+  print(response_body)
+  assert response.status_code == 200
+  assert response_body['stage'] == 1

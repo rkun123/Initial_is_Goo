@@ -1,18 +1,19 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class Room(BaseModel):
+class User(BaseModel):
     id: str
     name: str
-    latest_stage: str
+    room_id: str
 
     class Config:
         orm_mode = True
 
-class User(BaseModel):
+class Room(BaseModel):
     id: str
     name: str
-    is_host: bool
+    latest_stage: str
+    host_user: User
 
     class Config:
         orm_mode = True
@@ -22,8 +23,8 @@ class CreateRoomRequest(BaseModel):
     room_name: str
 
 class CreateRoomResponse(BaseModel):
-    room: Optional[Room]
-    user: Optional[User]
+    room: Room
+    user: User
 
 class JoinRoomRequest(BaseModel):
     user_name: str
@@ -38,3 +39,6 @@ class NewHandData(BaseModel):
     user_id: str
     room_id: str
     hand: int
+
+class PostResult(NewHandData):
+    pass
