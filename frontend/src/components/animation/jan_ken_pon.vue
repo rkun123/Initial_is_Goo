@@ -87,7 +87,6 @@ export default {
   position: relative;
   font-weight: 900;
   font-size: 4.5em;
-  z-index: 20;
 }
 .ml4 .letters {
   position: absolute;
@@ -96,6 +95,5 @@ export default {
   top: 0.3em;
   right: 0;
   opacity: 0; 
-  z-index: 20;
 }
 </style>

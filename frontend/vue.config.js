@@ -1,5 +1,11 @@
 module.exports = {
   devServer: {
-    proxy: "https://1539b452b584.ngrok.io/",
+    proxy: {
+      '/': {
+        target: 'https://b75aab941684.ngrok.io/',
+        wss: true,
+        changeOrigin: true
+      }
+    }
   },
 };

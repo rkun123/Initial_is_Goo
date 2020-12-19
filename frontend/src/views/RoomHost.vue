@@ -20,7 +20,7 @@ import HandStatus from '../components/HandStatus/HandStatus.vue'
 import Jankenpon from '../components/animation/jan_ken_pon.vue'
 import GuestHand from '../components/UserHand/GuestHand.vue'
 import EveyoneHand from '../components/UserHand/_EveyoneHand.vue'
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 export default {
   data () {
@@ -30,7 +30,9 @@ export default {
       on: false,
       roomname: "shuuuuの部屋",
       is_win: true,
-      socket: "",
+      websocket: "",
+      roomid:"",
+      userid: "",
     }
   },
   components: { 
@@ -49,16 +51,20 @@ export default {
   mounted: function(){
     this.username = this.$store.state.username
     this.roomname = this.$store.state.roomname
-    const socket = io('/', {
-        path: '/ws/socket.io',
-        transports:['websocket']
-    })
-    socket.on('new_hand', msg => console.log(msg))
+    this.userid= this.$store.state.userid
+    this.roomid = this.$store.state.roomid
+    this.websocket = new WebSocket('ws://localhost:8080/websocket')
   },
   watch: {
     hand: function(hand) {
-      this.socket.emit('new_hand',{hand})
-      console.log("watch")
+      const data ={
+        event: "new_hand",
+        user_id: this.username,
+        room_id: this.roomid,
+        hand: hand
+      }
+      this.websocket.send(JSON.stringify(data)) 
+      console.log(data)
     }
   }
 }
