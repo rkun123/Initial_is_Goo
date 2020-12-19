@@ -15,6 +15,10 @@ export default {
 }
 </script>
 <style>
+body {
+  background: url(/back_img/haikei-plesio.png);
+  backdrop-filter: blur(1px)
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
