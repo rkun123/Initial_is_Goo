@@ -5,7 +5,7 @@
     <div class="vs">
       <div class="hands">
         <h2>You</h2>
-        <guest-hand :hand="hand" :username="username" class="youHand"/>
+        <guest-hand :hand="hand" :username="username" :is_win="is_win" class="youHand"/>
         <h1>vs</h1>
       </div>
     </div>
@@ -26,6 +26,7 @@ export default {
       username: "shuuuu",
       on: false,
       roomname: "shuuuuの部屋",
+      is_win: true
     }
   },
   components: { 
@@ -35,7 +36,7 @@ export default {
   },
   methods: {
     startGame() {
-      
+
     }
   }
 }
