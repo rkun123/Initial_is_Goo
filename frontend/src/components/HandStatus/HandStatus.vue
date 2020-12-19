@@ -1,7 +1,7 @@
 <template>
   <div>
     <video id="webcam" autoplay width="640" height="480"></video>
-    <button id="enableCamButton">Enable Webcam</button>
+    <!-- <button id="enableCamButton">Enable Webcam</button> -->
     <h1 id="resultElem"></h1>
   </div>
 </template>
@@ -56,10 +56,10 @@ export default {
   },
   mounted: function(){
     this.video = document.getElementById('webcam');
-    const enableWebCamButton = document.getElementById('enableCamButton')
+    // const enableWebCamButton = document.getElementById('enableCamButton')
     this.resultElem = document.getElementById('resultElem')
     console.log(this.resultElem+"change")
-    enableWebCamButton.addEventListener('click', this.enableCam());
+    this.enableCam();
   },
   watch:{
     result: function() {
