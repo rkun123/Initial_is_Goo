@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>RockPaperScissors-test</title>
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+        <script src="./predict.js"></script>
+        <script type="text/javascript">
+        window.onload = () => {
+            const video = document.getElementById('webcam');
+            const enableWebCamButton = document.getElementById('enableCamButton')
+            const resultElem = document.getElementById('resultElem')
+
+            function getUserMediaSupported() {
+                return !!(navigator.mediaDevices &&
+                    navigator.mediaDevices.getUserMedia);
+            }
+
+            if (getUserMediaSupported()) {
+                enableWebCamButton.addEventListener('click', enableCam);
+            } else {
+                console.warn('getUserMedia() is not supported by your browser');
+            }
+
+            function prepareModel() {
+                tf.loadLayersModel('http://localhost:8000/model/rock_paper_scissors_mobilenet_v2/model.json').then((model) => {
+                    console.info('Loaded model')
+                    console.log(model)
+                    setInterval(predict, 500, video, model, resultElem)
+                    //predict(video, model)
+                    
+                }).catch((e) => {
+                    console.error(e)
+                })
+            }
+
+            //prepareModel()
+
+            // Placeholder function for next step. Paste over this in the next step.
+            function enableCam(event) {
+                console.log("Pushed")
+                if(getUserMediaSupported()) {
+                    navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((localMediaStream) => {
+                        console.log(localMediaStream)
+                        video.srcObject = localMediaStream;
+                        video.onloadedmetadata = (e) => {
+                            console.log('Video loaded')
+                            console.log(e)
+                            prepareModel()
+                        }
+                    }).catch((e) => {
+                        console.error(e)
+                    })
+                }
+            }
+
+        }
+        </script>
+        <video id="webcam" autoplay width="640" height="480"></video>
+        <button id="enableCamButton">Enable Webcam</button>
+        <h1 id="resultElem"></h1>
+    </body>
+</html>

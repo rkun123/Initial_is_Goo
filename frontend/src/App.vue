@@ -19,10 +19,8 @@ export default {
 </script>
 <style>
 body {
-  background: linear-gradient(#d8fdfbd3, #69ffdf);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 100%;
+  background: url(/back_img/haikei-plesio.png);
+  backdrop-filter: blur(1px)
 }
 #app {
   font-family: 'Noto Sans JP', sans-serif;
