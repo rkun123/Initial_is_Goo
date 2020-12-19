@@ -1,6 +1,7 @@
 <template>
   <div class="user">
     <h1>{{roomname}}</h1>
+    <jankenpon ref="jkp"/>
     <button @click="startGame" class="button-margin">じゃんけんスタート！！</button>
     <div class="vs">
       <div class="hands">
@@ -16,6 +17,7 @@
 
 <script>
 import HandStatus from '../components/HandStatus/HandStatus.vue'
+import Jankenpon from '../components/animation/jan_ken_pon.vue'
 import GuestHand from '../components/UserHand/GuestHand.vue'
 import EveyoneHand from '../components/UserHand/_EveyoneHand.vue'
 
@@ -32,10 +34,13 @@ export default {
   components: { 
     HandStatus, 
     GuestHand,
-    EveyoneHand 
+    EveyoneHand,
+    Jankenpon
   },
-  methods: {
+  methods:{
     startGame() {
+      this.$refs.jkp.is_start= true
+      console.log(this.$refs.jkp.is_start)
 
     }
   }
@@ -74,6 +79,6 @@ export default {
   height: 60px;
   max-width: 400px;
   background-color: whitesmoke;
-  cursor: pointer;
+  z-index: 10;
 }
 </style>

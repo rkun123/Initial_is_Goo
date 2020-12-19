@@ -6,7 +6,7 @@
         <fm1 class="fmm1" placeholder="Room Name"></fm1>
         <fm2 class="fmm2" placeholder="User Neme"></fm2>
         <div class="room-making">
-          <button class="button-margin" @click="make_room">Creat</button>
+          <button class="button-margin" @click="createRoom">Creat</button>
         </div>
       </div>
     </div>
@@ -15,16 +15,41 @@
 
 <script>
 import Form_text from '@/components/Form_text.vue'
+import Form_text2 from '@/components/Form_text2.vue'
 
 export default {
   name: 'Host',
+  data() {
+    return {
+      name: "",
+      room: ""
+    }
+  },
   components: {
     "fm1": Form_text,
-    "fm2": Form_text
+    "fm2": Form_text2
   },
   methods: {
-    make_room(){
-      this.$router.push('/room/:session.id/host')
+    createRoom(){
+      if(this.name=="" || this.room==""){
+        console.log(this.name,this.room)
+        alert("空欄の箇所があります。")
+      } else {
+        const data = {
+          user_name: this.name,
+          room_name: this.room
+        }
+        fetch('https://8233a104b213.ngrok.io/room', {
+          method: "POST",
+          body: JSON.stringify(data)
+        }).then((res) => {
+          return res.json()
+        }).then((res) => {
+          console.log(res)
+        }).catch((e) => {
+          alert("Fetch failed" + e)
+      })
+      }
     }
   }
 }
@@ -51,6 +76,7 @@ export default {
   height: 40px;
   max-width: 300px;
   min-width: 100px;
+  z-index: 10;
 }
 .design{
 backdrop-filter: blur(3px);
@@ -58,8 +84,6 @@ backdrop-filter: blur(3px);
   border-radius: 5px;
   color: #333;
   line-height: 1.5;
-  padding: 1rem 2rem;
-  margin: auto;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
@@ -70,7 +94,7 @@ backdrop-filter: blur(3px);
   border-color: #8b8b8b5e;
   width:100%;
   max-width: 700px;
-  min-width: 300px;
+  
 }
 .container {
   align-items: center;

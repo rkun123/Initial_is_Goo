@@ -4,8 +4,8 @@
     <div class="container">
       <div class="design">
         <h1>Rock-Paper-Scissors</h1>
-        <fm class="fmm1" placeholder="Room ID"></fm>
-        <fm class="fmm2" placeholder="User Name"></fm>
+        <fm1 class="fmm1" placeholder="Room ID"></fm1>
+        <fm2 class="fmm2" placeholder="User Name"></fm2>
         <div class="room-making">
           <button class="button-margin" @click="join">Join</button>
         </div>
@@ -17,17 +17,42 @@
 
 <script>
 import Form_text from '@/components/Form_text.vue'
+import Form_text2 from '@/components/Form_text2.vue'
 
 export default {
   name: 'Home',
+  data () {
+    return {
+      name: "",
+      room: ""
+    }
+  },
   components: {
-    "fm": Form_text
+    "fm1": Form_text,
+    "fm2": Form_text2
   },
   methods: {
     join(){
-      this.$router.push('/room/1/guest')
+      if(this.name=="" || this.room==""){
+        console.log(this.name,this.room)
+        alert("空欄の箇所があります。")
+      } else {
+        const data = {
+          user_name: this.name
+        }
+        fetch('https://initial-is-goo.herokuapp.com/room/'+this.room, {
+          method: "POST",
+          body: JSON.stringify(data)
+        }).then((res) => {
+          return res.json()
+        }).then((res) => {
+          console.log(res)
+        }).catch((e) => {
+          alert("Fetch failed" + e)
+        })
+      }
     }
-  }
+  },
 }
 </script>
 
@@ -53,9 +78,8 @@ export default {
   border-bottom-left-radius: 50px;
   width: 30%;
   height: 40px;
-  max-width: 300px;
-  min-width: 100px;
-  
+  max-width: 700px;
+  min-width: 200px;
 }
 .design{
   backdrop-filter: blur(3px);
@@ -63,7 +87,6 @@ export default {
   border-radius: 5px;
   color: #333;
   line-height: 1.5;
-  padding: 1rem 2rem;
   margin: auto;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;

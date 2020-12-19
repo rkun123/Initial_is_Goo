@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="cp_iptxt">
-      <input type="text" :placeholder="placeholder" v-model="text">
+      <input type="text" :placeholder="placeholder" v-model="username">
       <img src="@/assets/enter_3719.png" class="icon" @click="check_room">
     </div>
   </div>
@@ -15,7 +15,7 @@ export default {
   data(){
     return {
       room_id:"",
-      text: ""
+      username: ""
     }
   },
   methods: {
@@ -29,8 +29,8 @@ export default {
       placeholder: String
   },
   watch: {
-    text: function() {
-      this.$parent.room = this.text
+    username: function () {
+      this.$parent.name = this.username
     }
   }
 }
