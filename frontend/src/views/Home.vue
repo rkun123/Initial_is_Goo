@@ -2,7 +2,7 @@
   <div class="home">
     <div class="back"></div>
     <h1>じゃんけん</h1>
-    <fm></fm>
+    <fm placeholder="room ID"></fm>
     <div class="room-making">
       <link-button path="/host" class="button-margin">ルーム作成</link-button>
     </div>

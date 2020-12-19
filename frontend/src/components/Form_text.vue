@@ -30,10 +30,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .cp_iptxt {
-	position: relative;
-	width: 40%;
+    position: relative;
+    width: 40%;
   max-width: 400px;
   margin: auto;
   
