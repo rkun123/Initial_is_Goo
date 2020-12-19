@@ -1,10 +1,14 @@
 <template>
   <div class="user">
-    <h1>じゃんけん~ルーム作成~</h1>
-    <fm1 class="fmm1" placeholder="Room name"></fm1>
-    <fm2 class="fmm2" placeholder="User neme"></fm2>
-    <div class="room-making">
-      <button class="button-margin" @click="make_room">作成</button>
+    <div class="container">
+      <div class="design">
+        <h1>Creat Room</h1>
+        <fm1 class="fmm1" placeholder="Room Name"></fm1>
+        <fm2 class="fmm2" placeholder="User Neme"></fm2>
+        <div class="room-making">
+          <button class="button-margin" @click="make_room">Creat</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +24,7 @@ export default {
   },
   methods: {
     make_room(){
-      this.$router.push('/roomhost')
+      this.$router.push('/room/:session.id/host')
     }
   }
 }
@@ -46,6 +50,22 @@ export default {
   width: 15%;
   height: 40px;
   max-width: 200px;
+}
+.design{
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.445);
+  border-radius: 5px;
+  color: #333;
+  line-height: 1.5;
+  max-width: 50%;
+  padding: 1rem 2rem;
+  margin: auto;
+}
+.container {
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 </style>
