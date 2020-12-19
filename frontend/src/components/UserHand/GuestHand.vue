@@ -1,6 +1,7 @@
 <template>
   <div class="guest">
-    <img :src="handname">
+    <img class="win" :src="handname" v-if="!is_win">
+    <img class="lose" :src="handname" v-if="is_win">
     <p>{{username}}</p>
   </div>
 </template>
@@ -14,7 +15,8 @@ export default {
   },
   props: {
     hand:String,
-    username:String
+    username:String,
+    is_win:Boolean
   },
   mounted: function() {
     this.handname = "/hands/"+this.hand+".png"
@@ -22,7 +24,6 @@ export default {
   watch: {
     hand: function() {
       this.handname = "/hands/"+this.hand+".png"
-      console.log(this.handname)
     }
   }
 }
@@ -36,12 +37,17 @@ export default {
   width: 200px;
   height: 250px;
 }
-img{
+.win{
   margin-top: 10px;
   height: 150px;
 }
+.lose{
+  margin-top: 10px;
+  height: 150px;
+  filter:grayscale(100%);
+}
 .guest p {
   margin-top: 10px;
-  font-size:calc(2rem + ((1vw - 0.5rem) * 4));
+  font-size: 30px;
 }
 </style>

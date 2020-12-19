@@ -4,12 +4,12 @@
     <div class="vs">
       <div class="hands">
         <h2>You</h2>
-        <guest-hand :hand="hand" :username="username" class="youHand"/>
+        <guest-hand :hand="hand" :username="username" :is_win="on" class="youHand"/>
       </div>
       <h1>vs</h1>
       <div class="hands">
         <h2>Host</h2>
-        <guest-hand :hand="hand" :username="username" class="youHand"/>
+        <guest-hand :hand="hand" :username="username" :is_win="is_win" class="youHand"/>
       </div>
     </div>
     <eveyone-hand :_data="hands"/>
@@ -29,6 +29,7 @@ export default {
       username: "shuuuu",
       on: false,
       roomname: "shuuuuの部屋",
+      is_win: true
     }
   },
   components: { 
@@ -54,6 +55,7 @@ export default {
 .vs {
   display: flex;
   margin: auto;
+  max-width: 800px;
 }
 .vs h1 {
   vertical-align: middle;
