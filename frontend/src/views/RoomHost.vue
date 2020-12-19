@@ -11,7 +11,7 @@
       </div>
     </div>
     <eveyone-hand :_data="hands"/>
-    <hand-status class="cam" v-if="on"/>
+    <hand-status class="cam" />
   </div>
 </template>
 
@@ -20,6 +20,7 @@ import HandStatus from '../components/HandStatus/HandStatus.vue'
 import Jankenpon from '../components/animation/jan_ken_pon.vue'
 import GuestHand from '../components/UserHand/GuestHand.vue'
 import EveyoneHand from '../components/UserHand/_EveyoneHand.vue'
+import io from 'socket.io-client';
 
 export default {
   data () {
@@ -28,7 +29,8 @@ export default {
       username: "",
       on: false,
       roomname: "shuuuuの部屋",
-      is_win: true
+      is_win: true,
+      socket: "",
     }
   },
   components: { 
@@ -47,6 +49,17 @@ export default {
   mounted: function(){
     this.username = this.$store.state.username
     this.roomname = this.$store.state.roomname
+    const socket = io('/', {
+        path: '/ws/socket.io',
+        transports:['websocket']
+    })
+    socket.on('new_hand', msg => console.log(msg))
+  },
+  watch: {
+    hand: function(hand) {
+      this.socket.emit('new_hand',{hand})
+      console.log("watch")
+    }
   }
 }
 </script>

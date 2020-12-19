@@ -1,5 +1,5 @@
 module.exports = {
   devServer: {
-    proxy: "https://initial-is-goo.herokuapp.com/"
+    proxy: "https://1539b452b584.ngrok.io/",
   },
 };
