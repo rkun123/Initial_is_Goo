@@ -39,7 +39,7 @@ export default {
           user_name: this.name,
           room_name: this.room
         }
-        fetch('https://8233a104b213.ngrok.io/room', {
+        fetch('/room', {
           method: "POST",
           body: JSON.stringify(data)
         }).then((res) => {

@@ -40,7 +40,7 @@ export default {
         const data = {
           user_name: this.name
         }
-        fetch('https://initial-is-goo.herokuapp.com/room/'+this.room, {
+        fetch('/room/'+this.room, {
           method: "POST",
           body: JSON.stringify(data)
         }).then((res) => {
