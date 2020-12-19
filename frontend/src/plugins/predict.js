@@ -1,6 +1,6 @@
 import * as tf from "@tensorflow/tfjs"
 
-export function predict(videoElem, model, resultElem) {
+export function predict(videoElem, model, predictResultCallback) {
   const modelInputWidth = model.input.shape[1];
   const modelInputHeight = model.input.shape[2];
 
@@ -26,12 +26,12 @@ export function predict(videoElem, model, resultElem) {
   //console.log(JSON.stringify(prediction))
   const choiceIndex = prediction.argMax(1).dataSync()[0];
   const status = [
-    "ぐー",
-    "ぱー",
-    "ちょき"
+    '0',
+    '1',
+    '2'
   ]
   console.log(prediction.argMax(1).dataSync())
   console.log(status[choiceIndex])
 
-  resultElem.innerHTML = status[choiceIndex]
+  predictResultCallback(choiceIndex);
 }

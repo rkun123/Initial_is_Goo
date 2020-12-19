@@ -14,7 +14,8 @@ export default {
   data() {
     return {
       video:"",
-      resultElem:""
+      resultElem:"",
+      result:""
     }
   },
   methods: {
@@ -24,7 +25,7 @@ export default {
       function handleModel(model) {
         console.info('Loaded model')
         console.log(model)
-        setInterval(predict, 500, self.video, model, self.resultElem)
+        setInterval(predict, 500, self.video, model, self.predictResultCallback)
         //predict(video, model)    
       }
       function handleError(error) 
@@ -49,12 +50,22 @@ export default {
           console.error(e)
         })
     },
+    predictResultCallback(result){
+      this.result = result
+    }
   },
   mounted: function(){
     this.video = document.getElementById('webcam');
     const enableWebCamButton = document.getElementById('enableCamButton')
     this.resultElem = document.getElementById('resultElem')
+    console.log(this.resultElem+"change")
     enableWebCamButton.addEventListener('click', this.enableCam());
+  },
+  watch:{
+    result: function() {
+      this.$parent.hand = this.result;
+      console.log(this.result)
+    }
   }
 }
 </script>
