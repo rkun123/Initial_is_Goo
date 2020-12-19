@@ -54,6 +54,3 @@ class NewUserResponse(BaseModel):
     id: str
     name: str
     room_id: str
-
-class GameResultData(BaseModel):
-    data: List[Result]
