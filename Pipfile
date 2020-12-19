@@ -19,6 +19,7 @@ uvloop = "*"
 httptools = "*"
 psycopg2 = "*"
 typing-extensions = "*"
+fastapi-socketio = "*"
 
 [dev-packages]
 pylint = "*"
