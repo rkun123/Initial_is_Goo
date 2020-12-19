@@ -1,7 +1,6 @@
 <template>
   <div class="user">
     <h1>{{roomname}}</h1>
-    <hand-status class="cam" v-if="on"/>
     <div class="vs">
       <div class="hands">
         <h2>You</h2>
@@ -13,34 +12,29 @@
         <guest-hand :hand="hand" :username="username" class="youHand"/>
       </div>
     </div>
-    <h2>みんなの手</h2>
-    <div class="everyone">
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-      <guest-hand :hand="hand" :username="username" class="guestHand"/>
-    </div>
+    <eveyone-hand :_data="hands"/>
+    <hand-status class="cam" v-if="on"/>
   </div>
 </template>
 
 <script>
 import HandStatus from '../components/HandStatus/HandStatus.vue'
 import GuestHand from '../components/UserHand/GuestHand.vue'
+import EveyoneHand from '../components/UserHand/_EveyoneHand.vue'
+
 export default {
   data () {
     return {
       hand:"0",
       username: "shuuuu",
       on: false,
-      roomname: "shuuuuの部屋"
+      roomname: "shuuuuの部屋",
     }
   },
   components: { 
     HandStatus, 
-    GuestHand 
+    GuestHand,
+    EveyoneHand 
   },
 }
 </script>
@@ -75,14 +69,5 @@ export default {
 .vs .hands{
   text-align: center;
   width:30%;
-}
-
-.everyone {
-  display: flex;
-  flex-wrap :wrap;
-}
-.everyone .guestHand {
-  size: 80%;
-  margin: 5px;
 }
 </style>
