@@ -1,0 +1,15 @@
+import schema
+from socketio import AsyncNamespace
+
+print("test")
+class SocketHandlers(AsyncNamespace):
+    def on_connect(self, sid, environ):
+        print('Connected by sid: ', sid)
+        pass
+
+    def on_disconnect(self, sid):
+        pass
+
+    def on_new_hand(self, sid, data):
+        new_hand = schema.NewHandData.parse_obj(data)
+        self.emit('new_hand', new_hand.dict(), room=new_hand.room_id)

@@ -21,6 +21,7 @@ def get_db():
 
 @router.get('/')
 async def root(request: Request, db: SessionClass = Depends(get_db)):
+  await request.state.sio.emit('message', {}, namespace='/event', room='')
   return JSONResponse({"message": "OK"})
 
 @router.post('/room', response_model=schema.CreateRoomResponse)
