@@ -55,16 +55,24 @@ export default {
   height: 40px;
   max-width: 300px;
   min-width: 100px;
+  
 }
 .design{
   backdrop-filter: blur(3px);
-  background-color: rgba(255, 255, 255, 0.445);
+  background-color: rgba(255, 255, 255, 0.61);
   border-radius: 5px;
   color: #333;
   line-height: 1.5;
-  
   padding: 1rem 2rem;
   margin: auto;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border: solid;
+  border: 0.3px solid;
+  border: solid;
+  border-color: #8b8b8b5e;
   width:100%;
   max-width: 700px;
   min-width: 300px;
