@@ -2,11 +2,11 @@
   <div class="user">
     <div class="container">
       <div class="design">
-        <h1>Creat Room</h1>
+        <h1>Create Room</h1>
         <fm1 class="fmm1" placeholder="Room Name"></fm1>
         <fm2 class="fmm2" placeholder="User Neme"></fm2>
         <div class="room-making">
-          <button class="button-margin" @click="make_room">Creat</button>
+          <button class="button-margin" @click="make_room">Create</button>
         </div>
       </div>
     </div>
