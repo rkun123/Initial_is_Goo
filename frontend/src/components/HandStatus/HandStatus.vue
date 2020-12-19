@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video id="webcam" autoplay width="640" height="480"></video>
+    <video id="webcam" autoplay width="200" height="200"></video>
     <!-- <button id="enableCamButton">Enable Webcam</button> -->
     <h1 id="resultElem"></h1>
   </div>
