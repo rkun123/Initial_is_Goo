@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/': {
-        target: 'https://b75aab941684.ngrok.io/',
+        target: 'https://initial-is-goo.herokuapp.com/',
         wss: true,
         changeOrigin: true
       }

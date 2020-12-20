@@ -8,7 +8,7 @@
           <link-button path="/room/join" class="button-margin">Join Room</link-button>
         </div>
         <div class="room-making">
-          <link-button path="/room/creat" class="button-margin">Creat Room</link-button>
+          <link-button path="/room/creat" class="button-margin">Create Room</link-button>
         </div>
       </div>
     </div>

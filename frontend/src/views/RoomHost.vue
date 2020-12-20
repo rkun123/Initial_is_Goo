@@ -54,6 +54,9 @@ export default {
     this.userid= this.$store.state.userid
     this.roomid = this.$store.state.roomid
     this.websocket = new WebSocket('ws://localhost:8080/websocket')
+    this.websocket.onmessage=(event)=>{
+      console.log(event)
+    }
   },
   watch: {
     hand: function(hand) {
@@ -64,7 +67,6 @@ export default {
         hand: hand
       }
       this.websocket.send(JSON.stringify(data)) 
-      console.log(data)
     }
   }
 }
