@@ -9,10 +9,15 @@
       <h1>vs</h1>
       <div class="hands">
         <h2>Host</h2>
-        <guest-hand :hand="hosthand" :username="hostname" :is_win="host_win" class="youHand"/>
+
+          <guest-hand :hand="getHostHand()" :username="hostname" :is_win="host_win" class="youHand"/>
+
       </div>
     </div>
-    <eveyone-hand :_data="users"/>
+    <!--<eveyone-hand :_data="users"/>-->
+    <div class="users_container">
+    <guest-hand v-for="user in users" :key="user.id" :hand="user.hand" :username="user.name" :is_win="is_win"/>
+    </div>
     <hand-status class="cam" />
   </div>
 </template>
@@ -20,12 +25,12 @@
 <script>
 import HandStatus from '../components/HandStatus/HandStatus.vue'
 import GuestHand from '../components/UserHand/GuestHand.vue'
-import EveyoneHand from '../components/UserHand/_EveyoneHand.vue'
+//import EveyoneHand from '../components/UserHand/_EveyoneHand.vue'
 
 export default {
   data () {
     return {
-      hand:"0",
+      hand:0,
       username: "",
       userid: "",
       on: false,
@@ -42,7 +47,12 @@ export default {
   components: { 
     HandStatus, 
     GuestHand,
-    EveyoneHand
+    //EveyoneHand
+  },
+  methods: {
+    getHostHand() {
+      return this.users.find(user => (user.id === this.$store.state.hostid))
+    }
   },
   mounted: function(){
     this.username = this.$store.state.username
@@ -67,6 +77,7 @@ export default {
         }else {
           this.users.map((user) => {
             if(user.id === payload.user_id){
+              console.log(user.name, ' hand')
               user.hand = payload.hand
             }
           })
@@ -77,7 +88,7 @@ export default {
         const newUser = {
           id:payload.id,
           name:payload.name,
-          hand: "0"
+          hand: 0
         }
         if(payload.room_id !== this.$store.state.roomid) return
         this.users.push(newUser)
@@ -131,5 +142,9 @@ export default {
 .vs .hands{
   text-align: center;
   width:30%;
+}
+.users_container {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>
