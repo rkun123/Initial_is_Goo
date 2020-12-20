@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request, HTTPException, WebSocket
+from fastapi import FastAPI, Request, HTTPException
+from starlette.websockets import WebSocketState
 from fastapi.middleware.cors import CORSMiddleware
 import schema
 from typing import List
@@ -54,7 +55,8 @@ class ConnectionManager:
 
     async def broadcast(self, data):
         for connection in self.active_connections:
-            await connection.send_json(data)
+            if connection.client_state == WebSocketState.CONNECTED:
+                await connection.send_json(data)
 
 websocket_manager = ConnectionManager()
 
