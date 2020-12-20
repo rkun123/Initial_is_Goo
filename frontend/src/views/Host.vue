@@ -43,18 +43,24 @@ export default {
 .button-margin {
   font-size: 20px;
   margin-top: 25px;
+  margin-bottom: 25px;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   border-bottom-left-radius: 50px;
   width: 30%;
   height: 40px;
-  max-width: 300px;
-  min-width: 100px;
+  max-width: 700px;
+  min-width: 200px;
+  z-index: 10;
+  background-color: rgb(253, 237, 216);
+  border: 0.3px solid;
+  border: solid;
+  border-color: #7575757a;
 }
 .design{
-backdrop-filter: blur(3px);
-  background-color: rgba(255, 255, 255, 0.61);
+  backdrop-filter: blur(3px);
+  background-color: rgba(253, 245, 236, 0.61);
   border-radius: 5px;
   color: #333;
   line-height: 1.5;
@@ -78,4 +84,10 @@ backdrop-filter: blur(3px);
   height: 100%;
   width: 100%;
 }
+.button-margin:hover {
+  font-weight: bold; /* 太字にする */
+  cursor: pointer; /* マウスカーソルを「ポインター」にする */
+  background-color: rgb(255, 224, 183);
+}
+
 </style>

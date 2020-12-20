@@ -1,6 +1,6 @@
 <template>
     <div class="myheader">
-        <router-link to="/">Initial is Goo</router-link>
+        <router-link class="header_text" to="/">Initial is Goo</router-link>
     </div>
 </template>
 
@@ -16,6 +16,10 @@
         max-width: 100%;
         padding: 1rem 2rem;
         margin: auto;
+    }
+    .header_text {
+        text-decoration: none;
+        font-weight: bold;
     }
     
 </style>
