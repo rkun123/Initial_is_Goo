@@ -55,10 +55,23 @@ export default {
     this.websocket = new WebSocket('ws://localhost:8080/websocket')
     this.websocket.onmessage=(event)=>{
       const payload = JSON.parse(event.data)
+      console.log(payload)
       if(payload.event =="new_hand"){
         this.users = this.$store.state.users
-        
+        if(payload.user_id === this.$store.state.userid){
+          console.log('myhand')
+          this.hand = payload.hand
+        }else if(payload.user_id !== this.$store.state.hostid){
           this.hosthand = payload.hand
+          console.log('hosthand')
+        }else {
+          this.users.map((user) => {
+            if(user.id === payload.user_id){
+              user.hand = payload.hand
+            }
+          })
+        }
+
         
       } else if (payload.event=="new_user"){
         const newUser = {
@@ -66,6 +79,7 @@ export default {
           name:payload.name,
           hand: "0"
         }
+        if(payload.room_id !== this.$store.state.roomid) return
         this.users.push(newUser)
       } else if (payload.event == "start_game"){
         console.log("start")
@@ -82,10 +96,6 @@ export default {
       }
       this.websocket.send(JSON.stringify(data)) 
     },
-    hosthand: function(hand) {
-      this.hosthand = hand
-      console.log("guest"+hand)
-    }
   }
 }
 </script>

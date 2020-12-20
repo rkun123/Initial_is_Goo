@@ -57,7 +57,7 @@ export default {
     this.websocket.onmessage=(event)=>{
       const payload = JSON.parse(event.data)
       if(payload.event =="new_hand"){
-        const number = this.users.find((user)=>(payload.user_id===user.id))
+        const number = this.users.find((user)=>(payload.user_id===user.userid))
         this.users[number] = payload.hand
       } else if (payload.event=="new_user"){
         const newUser = {
@@ -82,6 +82,9 @@ export default {
         hand: hand
       }
       this.websocket.send(JSON.stringify(data)) 
+    },
+    users: function(){
+      this.$store.users = this.users
     }
   }
 }
