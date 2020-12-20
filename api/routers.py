@@ -35,20 +35,29 @@ async def join_room_handler(request: Request, req: schema.JoinRoomRequest, room_
   res = join_room(db, req.user_name, room_id)
   response = schema.JoinRoomResponse(user=res['user'], room=res['room'])
   new_user_data = schema.NewUserResponse(id=response.user.id, name=response.user.name, room_id=response.user.room_id)
-  await request.state.sio.emit('new_user', new_user_data, namespace='/event', room=response.room.id)
+  # await request.state.sio.emit('new_user', new_user_data, namespace='/event', room=response.room.id)
+  new_user_websocket_data = new_user_data.dict()
+  new_user_websocket_data['event'] = 'new_user'
+  await request.websocket.broadcast(new_user_websocket_data)
   return response
 
 @router.post('/room/{room_id}/start_game')
 async def start_game_handler(request: Request, req: schema.StartGameRequest, room_id: str, db: SessionClass = Depends(get_db)):
   stage = start_game(db, room_id, req.user_id)
-  await request.state.sio.emit('start_game', stage, namespace='/event', room=room_id)
+  stage_websocket_data = stage
+  stage_websocket_data['event'] = 'start_game'
+  await request.websocket.broadcast(stage_websocket_data)
+  # await request.state.sio.emit('start_game', stage, namespace='/event', room=room_id)
   return stage
 
 @router.post('/room/{room_id}/result', response_model=schema.Result)
 async def post_result_handler(request: Request, req: schema.PostResult, room_id: str, db: SessionClass = Depends(get_db)):
   if result_checker(db, room_id):
     result = schema.GameResult(result=make_result_list(db, room_id), winner=winner_checker(db, room_id))
-    await request.state.sio.emit('game_result', result, namespace='/event', room=room_id)
+    result_websocket_data = result.dict()
+    result_websocket_data['event'] = 'game_result'
+    await request.websocket.broadcast(result_websocket_data)
+    # await request.state.sio.emit('game_result', result, namespace='/event', room=room_id)
   posted_result = post_result(db, room_id, req.user_id, req.hand)
   response = schema.Result(
     room_id=posted_result.room_id, 

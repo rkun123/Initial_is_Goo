@@ -38,12 +38,6 @@ async def inject_user_id_into_request(request: Request, call_next):
     response = await call_next(request)
     return response
 
-@app.middleware('http')
-async def inject_sio(request: Request, call_next):
-    request.state.sio = socket_manager._sio
-    response = await call_next(request)
-    return response
-
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
@@ -72,13 +66,17 @@ async def websocket_endpoint(websocket: WebSocket):
         data = await websocket.receive_json()
         print(data)
         if data['event'] == 'new_hand':
-            print(data['room_id'])
-            print(data['user_id'])
-            print(data['hand'])
             await websocket_manager.broadcast(data)
 
         # if data['event'] == 'new_hand':
             # await websocket.send_json(data=data['payload'])
+
+@app.middleware('http')
+async def inject_websocket(request: Request, call_next):
+    request.state.websocket = websocket_manager
+    response = await call_next(request)
+    return response
+
 
 socket_manager._sio.register_namespace(SocketHandlers('/'))
 
