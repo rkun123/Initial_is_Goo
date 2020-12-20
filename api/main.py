@@ -1,6 +1,7 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 import schema
+from typing import List
 from fastapi_socketio import SocketManager
 from socket_handlers import SocketHandlers
 
@@ -42,6 +43,42 @@ async def inject_sio(request: Request, call_next):
     request.state.sio = socket_manager._sio
     response = await call_next(request)
     return response
+
+class ConnectionManager:
+    def __init__(self):
+        self.active_connections: List[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        self.active_connections.remove(websocket)
+
+    async def send_personal_message(self, message: str, websocket: WebSocket):
+        await websocket.send_text(message)
+
+    async def broadcast(self, data):
+        for connection in self.active_connections:
+            await connection.send_json(data)
+
+websocket_manager = ConnectionManager()
+
+@app.websocket("/websocket")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket_manager.connect(websocket)
+    while True:
+        print('pending')
+        data = await websocket.receive_json()
+        print(data)
+        if data['event'] == 'new_hand':
+            print(data['room_id'])
+            print(data['user_id'])
+            print(data['hand'])
+            await websocket_manager.broadcast(data)
+
+        # if data['event'] == 'new_hand':
+            # await websocket.send_json(data=data['payload'])
 
 socket_manager._sio.register_namespace(SocketHandlers('/'))
 

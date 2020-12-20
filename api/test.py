@@ -121,3 +121,6 @@ def test_post_result():
   assert response_client_body['hand'] == client_hand
   assert response_host_body['stage'] == response_client_body['stage']
 
+  def test_websocket_connection():
+    websocket = c.websocket_connect("/websocket")
+    data = websocket.receive_json()
