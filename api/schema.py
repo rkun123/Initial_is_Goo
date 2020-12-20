@@ -12,7 +12,7 @@ class User(BaseModel):
 class Room(BaseModel):
     id: str
     name: str
-    latest_stage: str
+    latest_stage: int
     host_user: User
     users: List[User]
 
