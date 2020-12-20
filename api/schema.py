@@ -14,6 +14,7 @@ class Room(BaseModel):
     name: str
     latest_stage: str
     host_user: User
+    users: List[User]
 
     class Config:
         orm_mode = True
