@@ -9,10 +9,10 @@
       <h1>vs</h1>
       <div class="hands">
         <h2>Host</h2>
-        <guest-hand :hand="hand" :username="hostname" :is_win="host_win" class="youHand"/>
+        <guest-hand :hand="hosthand" :username="hostname" :is_win="host_win" class="youHand"/>
       </div>
     </div>
-    <eveyone-hand :_data="hands"/>
+    <eveyone-hand :_data="users"/>
     <hand-status class="cam" />
   </div>
 </template>
@@ -26,23 +26,67 @@ export default {
   data () {
     return {
       hand:"0",
-      username: "shuuuu",
+      username: "",
+      userid: "",
       on: false,
       roomname: "",
+      roomid: "",
       is_win: true,
       hostname:"",
-      host_win: true
+      hostid: "",
+      hosthand: 0,
+      host_win: true,
+      users:[]
     }
   },
   components: { 
     HandStatus, 
     GuestHand,
-    EveyoneHand 
+    EveyoneHand
   },
   mounted: function(){
     this.username = this.$store.state.username
     this.hostname = this.$store.state.hostname
+    this.hostid = this.$store.state.hostid
     this.roomname = this.$store.state.roomname
+    this.users = this.$store.state.users
+    this.userid = this.$store.state.userid
+    this.roomid = this.$store.state.roomid
+    this.websocket = new WebSocket('ws://localhost:8080/websocket')
+    this.websocket.onmessage=(event)=>{
+      const payload = JSON.parse(event.data)
+      if(payload.event =="new_hand"){
+        this.users = this.$store.state.users
+        if(payload.id==this.hostid){
+          this.hosthand = payload.hand
+        } else {
+        const number = this.users.find((user)=>(payload.user_id===user.id))
+        this.users[number] = payload.hand
+        this.$store.state.users = this.users
+        }
+      } else if (payload.event=="new_user"){
+        const newUser = {
+          id:payload.id,
+          name:payload.name,
+          hand: "0"
+        }
+        this.users.push(newUser)
+      } else if (payload.event == "start_game"){
+        console.log("start")
+      }
+      console.log(event)
+    }
+  },
+  watch: {
+    hand: function(hand) {
+      const data ={
+        event: "new_hand",
+        user_id: this.userid,
+        room_id: this.roomid,
+        hand: hand
+      }
+      this.websocket.send(JSON.stringify(data)) 
+    }
   }
 }
 </script>

@@ -9,9 +9,12 @@ export default new Vuex.Store({
     userid: "",
     hand: "0",
     hostname:"",
+    hostid:"",
     roomname: "",
     roomid: "",
     is_win: true,
+    users: [],
+
   },
   mutations: {
   },

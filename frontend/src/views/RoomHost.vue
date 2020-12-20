@@ -10,7 +10,7 @@
         <h1>vs</h1>
       </div>
     </div>
-    <eveyone-hand :_data="hands"/>
+    <eveyone-hand :_data="users"/>
     <hand-status class="cam" />
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
       websocket: "",
       roomid:"",
       userid: "",
+      users:[],
     }
   },
   components: { 
@@ -45,7 +46,6 @@ export default {
     startGame() {
       this.$refs.jkp.is_start= true
       console.log(this.$refs.jkp.is_start)
-
     }
   },
   mounted: function(){
@@ -55,6 +55,21 @@ export default {
     this.roomid = this.$store.state.roomid
     this.websocket = new WebSocket('ws://localhost:8080/websocket')
     this.websocket.onmessage=(event)=>{
+      const payload = JSON.parse(event.data)
+      if(payload.event =="new_hand"){
+        const number = this.users.find((user)=>(payload.user_id===user.id))
+        this.users[number] = payload.hand
+      } else if (payload.event=="new_user"){
+        const newUser = {
+          id: payload.id,
+          name: payload.name,
+          hand: 0
+        }
+        this.users.push(newUser)
+        console.log(this.users)
+      } else if (payload.event == "start_game"){
+        console.log("start")
+      }
       console.log(event)
     }
   },
@@ -62,7 +77,7 @@ export default {
     hand: function(hand) {
       const data ={
         event: "new_hand",
-        user_id: this.username,
+        user_id: this.userid,
         room_id: this.roomid,
         hand: hand
       }

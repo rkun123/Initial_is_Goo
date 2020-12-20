@@ -46,12 +46,20 @@ export default {
         }).then((res) => {
           return res.json()
         }).then((res) => {
+          this.$store.state.users = res.room.users.map((user) => {
+            user.hand = 0
+            return user
+          })//配列に初期値グーを挿入している
           console.log(res)
           this.$store.state.username = this.name
           this.$store.state.hostname = res.room.host_user.name
+          this.$store.state.hostid = res.room.host_user.id
           this.$store.state.roomname = res.room.name
+          this.$store.state.roomid = this.room
+          this.$store.state.userid = res.user.id
           this.$router.push("/room/"+res.room.host_user.room_id+"/guest")
         }).catch((e) => {
+          console.log(e)
           alert("Fetch failed" + e)
         })
       }

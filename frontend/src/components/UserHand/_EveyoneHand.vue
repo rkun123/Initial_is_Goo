@@ -1,9 +1,11 @@
 <template>
   <div>
     <h2>みんなの手</h2>
+    <div class="hands_container">
       <div class="everyone" v-for="(hand, number) in hands" :key="number">
         <guest-hand :hand="hand.hand" :username="hand.name" class="guestHand"/>
       </div>
+    </div>
   </div>
 </template>
 
@@ -36,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-.everyone {
+.hands_container {
   display: flex;
   flex-wrap :wrap;
 }
