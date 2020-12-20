@@ -92,6 +92,14 @@ def result_checker(db: SessionClass, room_id):
         result_counter = session.query(Result).filter(Result.room_id == room.id, Result.stage == room.latest_stage).count()
         return result_counter == len(room.users)
 
+def winner_checker(db: SessionClass, room_id):
+    with session_manager(db) as session:
+        if session.query(Room).filter(Room.id == room_id).count() == 0:
+            raise HTTPException(status_code=404)
+        room = session.query(Room).filter(Room.id == room_id).first()
+        winner_counter = session.query(Result).filter(Result.room_id == room.id, Result.stage == room.latest_stage, Result.is_win == True).count()
+        return winner_counter
+
 def post_result(db: SessionClass, room_id, user_id, user_hand):
     with session_manager(db) as session:
         if session.query(Room).filter(Room.id == room_id).count() == 0:

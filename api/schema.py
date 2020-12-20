@@ -54,3 +54,7 @@ class NewUserResponse(BaseModel):
     id: str
     name: str
     room_id: str
+
+class GameResult(BaseModel):
+    result: List[Result]
+    winner: int

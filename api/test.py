@@ -95,27 +95,29 @@ def test_post_result():
   })
   formatted_user_join_res = user_join_res.json()
   print(formatted_user_join_res)
+  host_hand = 1
+  client_hand = 2
   join_user = formatted_user_join_res['user']
   response_host = c.post('/room/{}/result'.format(room['id']), json={
     'user_id': room['host_user']['id'],
     'room_id': room['id'],
-    'hand': 1
+    'hand': host_hand
   })
   response_host_body = response_host.json()
   response_client = c.post('/room/{}/result'.format(room['id']), json={
     'user_id': join_user['id'],
     'room_id': room['id'],
-    'hand': 2
+    'hand': client_hand
   })
   response_client_body = response_client.json()
   assert response_host.status_code == 200
   assert response_host_body['user_id'] == room['host_user']['id']
   assert response_host_body['room_id'] == room['id']
-  assert response_host_body['hand'] == 1
+  assert response_host_body['hand'] == host_hand
   assert response_client.status_code == 200
   assert response_client_body['user_id'] == join_user['id']
   assert response_client_body['room_id'] == room['id']
   assert response_client_body['is_win'] == True
-  assert response_client_body['hand'] == 2
+  assert response_client_body['hand'] == client_hand
   assert response_host_body['stage'] == response_client_body['stage']
 

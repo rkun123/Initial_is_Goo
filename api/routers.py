@@ -47,7 +47,8 @@ async def start_game_handler(request: Request, req: schema.StartGameRequest, roo
 @router.post('/room/{room_id}/result', response_model=schema.Result)
 async def post_result_handler(request: Request, req: schema.PostResult, room_id: str, db: SessionClass = Depends(get_db)):
   if result_checker(db, room_id):
-    await request.state.sio.emit('game_result', make_result_list(db, room_id), namespace='/event', room=room_id)
+    result = schema.GameResult(result=make_result_list(db, room_id), winner=winner_checker(db, room_id))
+    await request.state.sio.emit('game_result', result, namespace='/event', room=room_id)
   posted_result = post_result(db, room_id, req.user_id, req.hand)
   response = schema.Result(
     room_id=posted_result.room_id, 
