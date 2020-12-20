@@ -50,7 +50,7 @@ export default {
             user.hand = 0
             return user
           })//配列に初期値グーを挿入している
-          console.log(res)
+          console.log(res,"dfgdg")
           this.$store.state.username = this.name
           this.$store.state.hostname = res.room.host_user.name
           this.$store.state.hostid = res.room.host_user.id

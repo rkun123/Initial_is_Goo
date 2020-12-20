@@ -57,13 +57,9 @@ export default {
       const payload = JSON.parse(event.data)
       if(payload.event =="new_hand"){
         this.users = this.$store.state.users
-        if(payload.id==this.hostid){
+        
           this.hosthand = payload.hand
-        } else {
-        const number = this.users.find((user)=>(payload.user_id===user.id))
-        this.users[number] = payload.hand
-        this.$store.state.users = this.users
-        }
+        
       } else if (payload.event=="new_user"){
         const newUser = {
           id:payload.id,
@@ -74,7 +70,6 @@ export default {
       } else if (payload.event == "start_game"){
         console.log("start")
       }
-      console.log(event)
     }
   },
   watch: {
@@ -86,6 +81,10 @@ export default {
         hand: hand
       }
       this.websocket.send(JSON.stringify(data)) 
+    },
+    hosthand: function(hand) {
+      this.hosthand = hand
+      console.log("guest"+hand)
     }
   }
 }
